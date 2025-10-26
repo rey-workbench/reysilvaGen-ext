@@ -1,13 +1,18 @@
-name: Release Extension
+name: Auto Release on Version Change
 
 on:
   push:
+    branches:
+      - main
+      - master
+    paths:
+      - "manifest.json"
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to release (e.g., 1.1.0)'
+        description: "Version to release (e.g., 1.1.0)"
         required: true
         type: string
 
@@ -15,38 +20,101 @@ permissions:
   contents: write
 
 jobs:
-  build-and-release:
+  check-version:
     runs-on: ubuntu-latest
-    
+    outputs:
+      should_release: ${{ steps.check.outputs.should_release }}
+      version: ${{ steps.check.outputs.version }}
+      tag: ${{ steps.check.outputs.tag }}
+
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 2
+
+      - name: 🔍 Check if version changed
+        id: check
+        run: |
+          # Get current version from manifest.json
+          CURRENT_VERSION=$(grep '"version"' manifest.json | cut -d'"' -f4)
+          TAG="v$CURRENT_VERSION"
+
+          echo "Current version: $CURRENT_VERSION"
+
+          # Check if this is a manual trigger or tag push
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+            TAG="v$VERSION"
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "tag=$TAG" >> $GITHUB_OUTPUT
+            exit 0
+          elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Check if tag already exists
+          if git ls-remote --tags origin | grep -q "refs/tags/$TAG"; then
+            echo "⚠️ Tag $TAG already exists, skipping release"
+            echo "should_release=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Check if manifest.json changed in this commit
+          if git diff HEAD^ HEAD --name-only | grep -q "manifest.json"; then
+            # Check if version changed
+            PREV_VERSION=$(git show HEAD^:manifest.json | grep '"version"' | cut -d'"' -f4 || echo "0.0.0")
+            
+            if [ "$CURRENT_VERSION" != "$PREV_VERSION" ]; then
+              echo "✅ Version changed: $PREV_VERSION → $CURRENT_VERSION"
+              echo "should_release=true" >> $GITHUB_OUTPUT
+              echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+              echo "tag=$TAG" >> $GITHUB_OUTPUT
+            else
+              echo "ℹ️ manifest.json changed but version unchanged"
+              echo "should_release=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "ℹ️ manifest.json not changed in this commit"
+            echo "should_release=false" >> $GITHUB_OUTPUT
+          fi
+
+  build-and-release:
+    needs: check-version
+    if: needs.check-version.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-      
+          node-version: "20"
+          cache: "npm"
+
       - name: 📦 Install dependencies
         run: npm ci
-      
+
       - name: 🏗️ Build extension
         run: |
           chmod +x build.sh
           ./build.sh
-      
-      - name: 📋 Get version from manifest
+
+      - name: 📋 Set version info
         id: version
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            VERSION="${{ github.event.inputs.version }}"
-          else
-            VERSION="${GITHUB_REF#refs/tags/v}"
-          fi
+          VERSION="${{ needs.check-version.outputs.version }}"
+          TAG="${{ needs.check-version.outputs.tag }}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
-      
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
       - name: 🔍 Verify build output
         run: |
           VERSION="${{ steps.version.outputs.version }}"
@@ -57,7 +125,16 @@ jobs:
           fi
           echo "✅ Build successful: $ZIP_FILE"
           ls -lh "$ZIP_FILE"
-      
+
+      - name: 🏷️ Create Git Tag
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+
       - name: 🚀 Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -66,28 +143,28 @@ jobs:
           name: Release ${{ steps.version.outputs.tag }}
           body: |
             ## 🎉 ReysilvaGen AutoCheckouter v${{ steps.version.outputs.version }}
-            
+
             ### 📦 Installation
-            
+
             1. Download the `.zip` file below
             2. Go to `chrome://extensions/`
             3. Enable **Developer Mode**
             4. Extract the ZIP file
             5. Click **Load unpacked** and select the extracted folder
-            
+
             ### ✨ What's New
-            
+
             <!-- Add release notes here -->
-            
+
             ---
-            
+
             **Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{ steps.version.outputs.version }}...HEAD
           files: dist/reysilvaGen-ext-${{ steps.version.outputs.version }}-minified.zip
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: ✅ Release complete
         run: |
           echo "🎉 Release created successfully!"
