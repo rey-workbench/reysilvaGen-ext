@@ -1,0 +1,95 @@
+name: Release Extension
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.1.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📦 Install dependencies
+        run: npm ci
+      
+      - name: 🏗️ Build extension
+        run: |
+          chmod +x build.sh
+          ./build.sh
+      
+      - name: 📋 Get version from manifest
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+      
+      - name: 🔍 Verify build output
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          ZIP_FILE="dist/reysilvaGen-ext-${VERSION}-minified.zip"
+          if [ ! -f "$ZIP_FILE" ]; then
+            echo "❌ Build failed: $ZIP_FILE not found"
+            exit 1
+          fi
+          echo "✅ Build successful: $ZIP_FILE"
+          ls -lh "$ZIP_FILE"
+      
+      - name: 🚀 Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Release ${{ steps.version.outputs.tag }}
+          body: |
+            ## 🎉 ReysilvaGen AutoCheckouter v${{ steps.version.outputs.version }}
+            
+            ### 📦 Installation
+            
+            1. Download the `.zip` file below
+            2. Go to `chrome://extensions/`
+            3. Enable **Developer Mode**
+            4. Extract the ZIP file
+            5. Click **Load unpacked** and select the extracted folder
+            
+            ### ✨ What's New
+            
+            <!-- Add release notes here -->
+            
+            ---
+            
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{ steps.version.outputs.version }}...HEAD
+          files: dist/reysilvaGen-ext-${{ steps.version.outputs.version }}-minified.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: ✅ Release complete
+        run: |
+          echo "🎉 Release created successfully!"
+          echo "📦 Version: ${{ steps.version.outputs.version }}"
+          echo "🔗 Release URL: ${{ steps.create_release.outputs.url }}"

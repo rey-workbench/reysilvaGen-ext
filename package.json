@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Development tools for Stripe Test Card Extension",
   "scripts": {
-    "watch": "node auto-reload.js"
+    "watch": "node auto-reload.js",
+    "build": "./build.sh",
+    "release": "npm run build && echo '✅ Build complete! Now create a git tag and push it to trigger release.'",
+    "release:tag": "node -e \"const v=require('./manifest.json').version; require('child_process').execSync('git tag v'+v+' && git push origin v'+v, {stdio:'inherit'})\""
   },
   "devDependencies": {
     "chokidar": "^4.0.3",
