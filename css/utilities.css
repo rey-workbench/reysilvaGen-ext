@@ -1,0 +1,10 @@
+/* Utility Classes */
+.cursor-pointer { cursor: pointer; }
+.form-helper-text { color: var(--text-muted); font-size: 11px; }
+.form-helper-block { color: var(--text-muted); font-size: 11px; display: block; margin-top: 6px; }
+.form-group-spaced { margin-top: 10px; }
+.text-secondary-sm { color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; }
+.icon-xs { font-size: 6px; }
+.icon-success { color: var(--success); }
+.logo-svg { vertical-align: middle; margin-right: 12px; }
+.info-grid-alt { margin-top: 10px; }

@@ -1,0 +1,84 @@
+/* Popup Page Specific Styles */
+body.popup-page {
+  width: 380px;
+  min-height: 300px;
+  max-height: 600px;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%);
+  overflow-y: auto;
+}
+
+.popup-container {
+  padding: 0;
+}
+
+.popup-header {
+  background: var(--accent-gradient);
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.popup-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 6px 0 0 0;
+  font-weight: 500;
+}
+
+.popup-content {
+  padding: 16px;
+}
+
+.popup-footer {
+  text-align: center;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+.popup-footer-text {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.popup-footer-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  transition: var(--transition);
+}
+
+.popup-footer-link:hover {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+}
+
+/* Popup Component Overrides - Smaller sizing */
+.popup-container .card { padding: 16px; margin-bottom: 12px; }
+.popup-container .card-header { gap: 8px; margin-bottom: 14px; padding-bottom: 10px; cursor: pointer; user-select: none; }
+.popup-container .card-header:hover { opacity: 0.8; }
+.popup-container .card-icon { font-size: 16px; }
+.popup-container .card-title { font-size: 14px; margin: 0; flex: 1; }
+.popup-container .toggle-wrapper { margin-bottom: 12px; }
+.popup-container .toggle-label { font-size: 13px; }
+.popup-container .form-group { margin-bottom: 10px; }
+.popup-container .form-label { font-size: 11px; margin-bottom: 6px; }
+.popup-container .form-input { padding: 10px 12px; font-size: 13px; font-family: 'Courier New', monospace; }
+.popup-container .input-row { gap: 10px; }
+.popup-container .btn { padding: 11px 16px; font-size: 13px; }

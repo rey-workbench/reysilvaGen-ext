@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Skull Design - Black & White -->
+  <g transform="translate(32, 32)">
+    <!-- Skull Head -->
+    <ellipse cx="0" cy="-2" rx="22" ry="25" fill="#ffffff" opacity="0.95"/>
+    
+    <!-- Top of skull (rounded) -->
+    <path d="M -22 -2 Q -22 -27 0 -27 Q 22 -27 22 -2" fill="#ffffff" opacity="0.95"/>
+    
+    <!-- Eye Sockets -->
+    <ellipse cx="-9" cy="-5" rx="5.5" ry="8" fill="#000000" opacity="0.9"/>
+    <ellipse cx="9" cy="-5" rx="5.5" ry="8" fill="#000000" opacity="0.9"/>
+    
+    <!-- Eye highlights for depth -->
+    <ellipse cx="-8" cy="-6" rx="2" ry="2.5" fill="#1a1a1a" opacity="0.6"/>
+    <ellipse cx="10" cy="-6" rx="2" ry="2.5" fill="#1a1a1a" opacity="0.6"/>
+    
+    <!-- Nose hole -->
+    <path d="M -3 4 L 0 9 L 3 4 Z" fill="#000000" opacity="0.9"/>
+    
+    <!-- Jaw/Teeth area -->
+    <path d="M -16 13 Q -16 23 -12 26 L -8 26 L -8 22 L -4 22 L -4 26 L 0 26 L 0 22 L 4 22 L 4 26 L 8 26 L 8 22 L 12 26 Q 16 23 16 13 L 16 10 L -16 10 Z" 
+          fill="#ffffff" opacity="0.95"/>
+    
+    <!-- Teeth separators -->
+    <line x1="-8" y1="22" x2="-8" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+    <line x1="-4" y1="22" x2="-4" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+    <line x1="0" y1="22" x2="0" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+    <line x1="4" y1="22" x2="4" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+    <line x1="8" y1="22" x2="8" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+  </g>
+</svg>

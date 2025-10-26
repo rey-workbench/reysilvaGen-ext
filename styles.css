@@ -1,0 +1,8 @@
+/* Import Modular CSS Files */
+@import url('css/variables.css');
+@import url('css/utilities.css');
+@import url('css/base.css');
+@import url('css/components.css');
+@import url('css/popup.css');
+@import url('css/options.css');
+@import url('css/responsive.css');

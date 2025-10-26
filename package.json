@@ -1,0 +1,14 @@
+{
+  "name": "reysilvagen-extension",
+  "version": "1.0.0",
+  "description": "Development tools for Stripe Test Card Extension",
+  "scripts": {
+    "watch": "node auto-reload.js"
+  },
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.44.0",
+    "ws": "^8.18.0"
+  }
+}

@@ -1,0 +1,36 @@
+/* CSS Variables */
+:root {
+  /* Colors */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #141414;
+  --bg-hover: #252525;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+  
+  --accent-primary: #ffffff;
+  --accent-secondary: #e0e0e0;
+  --accent-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #404040 100%);
+  
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+  --info: #2196f3;
+  
+  --border-color: #2a2a2a;
+  --border-light: #404040;
+  
+  /* Shadows */
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.7);
+  
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  
+  /* Transitions */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

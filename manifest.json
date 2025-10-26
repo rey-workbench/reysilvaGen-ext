@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "ReysilvaGen AutoCheckouter",
+  "description": "Auto-fill Stripe checkout forms - Educational Testing Tool by @reysilvaa12",
+  "version": "1.1.0",
+
+  "permissions": [
+      "storage",
+      "activeTab",
+      "tabs"
+  ],
+  "host_permissions": [
+      "https://checkout.stripe.com/*",
+      "https://*.stripe.com/*"
+  ],
+  "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon.svg",
+        "48": "icon.svg",
+        "128": "icon.svg"
+      }
+  },
+  "icons": {
+    "16": "icon.svg",
+    "48": "icon.svg",
+    "128": "icon.svg"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "assets/fontawesome/all.min.css",
+      "assets/fontawesome/webfonts/fa-brands-400.woff2",
+      "assets/fontawesome/webfonts/fa-regular-400.woff2",
+      "assets/fontawesome/webfonts/fa-solid-900.woff2"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "background": {
+      "service_worker": "background.js",
+      "type": "module"
+  },
+  "content_scripts": [{
+      "matches": ["https://checkout.stripe.com/*", "https://*.stripe.com/*"],
+      "js": [
+          "shared/constants.js",
+          "shared/config.js",
+          "js/utils/logger.js",
+          "js/utils/eventHelper.js",
+          "js/generators/nameGenerator.js",
+          "js/generators/cardGenerator.js",
+          "js/ui/notification.js",
+          "js/ui/floatingElements.js",
+          "js/form/formFiller.js",
+          "js/form/submitHandler.js",
+          "js/content-main.js"
+      ]
+  }],
+  "options_page": "options.html"
+}

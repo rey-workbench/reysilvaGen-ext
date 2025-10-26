@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReysilvaGen Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/fontawesome/all.min.css">
+</head>
+<body class="options-page">
+    <div class="options-container">
+        <div class="header">
+            <h1 class="header-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="36" height="36" class="logo-svg">
+                    <g transform="translate(32, 32)">
+                        <ellipse cx="0" cy="-2" rx="22" ry="25" fill="#ffffff" opacity="0.95"/>
+                        <path d="M -22 -2 Q -22 -27 0 -27 Q 22 -27 22 -2" fill="#ffffff" opacity="0.95"/>
+                        <ellipse cx="-9" cy="-5" rx="5.5" ry="8" fill="#000000" opacity="0.9"/>
+                        <ellipse cx="9" cy="-5" rx="5.5" ry="8" fill="#000000" opacity="0.9"/>
+                        <ellipse cx="-8" cy="-6" rx="2" ry="2.5" fill="#1a1a1a" opacity="0.6"/>
+                        <ellipse cx="10" cy="-6" rx="2" ry="2.5" fill="#1a1a1a" opacity="0.6"/>
+                        <path d="M -3 4 L 0 9 L 3 4 Z" fill="#000000" opacity="0.9"/>
+                        <path d="M -16 13 Q -16 23 -12 26 L -8 26 L -8 22 L -4 22 L -4 26 L 0 26 L 0 22 L 4 22 L 4 26 L 8 26 L 8 22 L 12 26 Q 16 23 16 13 L 16 10 L -16 10 Z" fill="#ffffff" opacity="0.95"/>
+                        <line x1="-8" y1="22" x2="-8" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="-4" y1="22" x2="-4" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="0" y1="22" x2="0" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="4" y1="22" x2="4" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="8" y1="22" x2="8" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                    </g>
+                </svg>
+                ReysilvaGen
+            </h1>
+            <p class="header-subtitle">Configure your extension settings</p>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <div class="card-header">
+                    <i class="card-icon fas fa-credit-card"></i>
+                    <h3 class="card-title">BIN Configuration</h3>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-sync"></i> BIN Usage Mode
+                    </label>
+                    <select id="binMode" class="form-input cursor-pointer">
+                        <option value="primary">Use Primary Only</option>
+                        <option value="secondary">Use Secondary Only</option>
+                        <option value="alternate">Auto Alternate Both</option>
+                    </select>
+                    <small class="form-helper-block">
+                        Choose how BINs are used when generating cards
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-credit-card"></i> Primary BIN
+                    </label>
+                    <input type="text" id="bin1" class="form-input" maxlength="64" placeholder="Enter BIN or Base64 encoded value">
+                    <small class="form-helper-text">
+                        <i class="fas fa-info-circle"></i> Accepts BIN numbers or Base64 encoded values (auto-decoded)
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-credit-card"></i> Secondary BIN (Optional)
+                    </label>
+                    <input type="text" id="bin2" class="form-input" maxlength="64" placeholder="Enter BIN or Base64 encoded value">
+                    <small class="form-helper-text">
+                        <i class="fas fa-info-circle"></i> Accepts BIN numbers or Base64 encoded values (auto-decoded)
+                    </small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="card-icon fas fa-keyboard"></i>
+                    <h3 class="card-title">Keyboard Shortcuts</h3>
+                </div>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label class="form-label">Generate Key</label>
+                        <input type="text" id="generateKey" class="form-input" maxlength="1" placeholder="X">
+                        <small class="form-helper-text">Ctrl + Key</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Clear Key</label>
+                        <input type="text" id="clearKey" class="form-input" maxlength="1" placeholder="C">
+                        <small class="form-helper-text">Ctrl + Key</small>
+                    </div>
+                </div>
+                <div class="form-group form-group-spaced">
+                    <label class="form-label">Submit Key</label>
+                    <input type="text" id="submitKey" class="form-input" maxlength="1" placeholder="H">
+                    <small class="form-helper-text">Ctrl + Key (Auto-click Subscribe button)</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="card-icon fas fa-list"></i>
+                    <h3 class="card-title">Card Details (Optional)</h3>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Format: CardNumber|Month|Year|CVV (one per line)</label>
+                    <textarea id="cardDetails" class="form-textarea" placeholder="4069485639589467|11|2032|669&#10;4532123456789012|12|2025|123"></textarea>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="saveButton" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    Save Settings
+                </button>
+                <button id="resetButton" class="btn btn-danger">
+                    <i class="fas fa-undo"></i>
+                    Reset to Defaults
+                </button>
+            </div>
+
+            <div class="contact-section">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="card-icon fas fa-users"></i>
+                        <h3 class="card-title">Special Thanks & Contact</h3>
+                    </div>
+                    <p class="text-secondary-sm">
+                        SPECIAL THANKS TO Reysilvaa12 and Bokep Melayu
+                    </p>
+                    <div class="contact-cards">
+                        <a href="https://t.me/reysilvaa12" class="contact-card" target="_blank">
+                            <i class="fab fa-telegram-plane contact-icon"></i>
+                            <div class="contact-info">
+                                <span class="contact-title">My Channel</span>
+                                <small class="contact-handle">@reysilvaa12</small>
+                            </div>
+                        </a>
+                        <a href="https://t.me/reysilvaa12" class="contact-card" target="_blank">
+                            <i class="fas fa-paper-plane contact-icon"></i>
+                            <div class="contact-info">
+                                <span class="contact-title">My Telegram</span>
+                                <small class="contact-handle">@reysilvaa12</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="shared/config.js"></script>
+    <script src="shared/validation.js"></script>
+    <script src="shared/notification.js"></script>
+    <script src="options.js"></script>
+</body>
+</html>

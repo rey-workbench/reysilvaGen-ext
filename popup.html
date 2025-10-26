@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReysilvaGen</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/fontawesome/all.min.css">
+</head>
+<body class="popup-page">
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <h1 class="popup-title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32">
+                    <g transform="translate(32, 32)">
+                        <ellipse cx="0" cy="-2" rx="22" ry="25" fill="#ffffff" opacity="0.95"/>
+                        <path d="M -22 -2 Q -22 -27 0 -27 Q 22 -27 22 -2" fill="#ffffff" opacity="0.95"/>
+                        <ellipse cx="-9" cy="-5" rx="5.5" ry="8" fill="#000000" opacity="0.9"/>
+                        <ellipse cx="9" cy="-5" rx="5.5" ry="8" fill="#000000" opacity="0.9"/>
+                        <ellipse cx="-8" cy="-6" rx="2" ry="2.5" fill="#1a1a1a" opacity="0.6"/>
+                        <ellipse cx="10" cy="-6" rx="2" ry="2.5" fill="#1a1a1a" opacity="0.6"/>
+                        <path d="M -3 4 L 0 9 L 3 4 Z" fill="#000000" opacity="0.9"/>
+                        <path d="M -16 13 Q -16 23 -12 26 L -8 26 L -8 22 L -4 22 L -4 26 L 0 26 L 0 22 L 4 22 L 4 26 L 8 26 L 8 22 L 12 26 Q 16 23 16 13 L 16 10 L -16 10 Z" fill="#ffffff" opacity="0.95"/>
+                        <line x1="-8" y1="22" x2="-8" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="-4" y1="22" x2="-4" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="0" y1="22" x2="0" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="4" y1="22" x2="4" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="8" y1="22" x2="8" y2="26" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
+                    </g>
+                </svg>
+                ReysilvaGen
+            </h1>
+            <p class="popup-subtitle">Quick Control Panel</p>
+        </div>
+
+        <div class="popup-content">
+            <!-- Status Card -->
+            <div class="card">
+                <div class="card-header" data-card="status">
+                    <i class="card-icon fas fa-power-off"></i>
+                    <h3 class="card-title">Extension Status</h3>
+                    <i class="fas fa-chevron-down card-chevron"></i>
+                </div>
+                <div class="card-body" id="statusBody">
+                <div class="toggle-wrapper">
+                    <span class="toggle-label">Enable Extension</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="extensionToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="status-badge-container" id="statusBadge">
+                    <div class="status-text inactive">Extension Disabled</div>
+                    <div class="status-info">
+                        <i class="fas fa-circle icon-xs"></i>
+                        <span>Toggle to activate</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Current Settings Info -->
+            <div class="card">
+                <div class="card-header" data-card="settings">
+                    <i class="card-icon fas fa-info-circle"></i>
+                    <h3 class="card-title">Current Settings</h3>
+                    <i class="fas fa-chevron-down card-chevron"></i>
+                </div>
+                <div class="card-body" id="settingsBody">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-credit-card"></i>
+                            Primary BIN
+                        </div>
+                        <div class="info-value" id="bin1Display">Not Set</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-keyboard"></i>
+                            <span id="keyLabel">Generate Key</span>
+                        </div>
+                        <div class="hotkey-carousel">
+                            <button class="hotkey-nav-btn" id="prevHotkey">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="info-value hotkey-display" id="keyDisplay">Ctrl + X</div>
+                            <button class="hotkey-nav-btn" id="nextHotkey">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-grid info-grid-alt">
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-sync"></i>
+                            BIN Mode
+                        </div>
+                        <div class="info-value" id="binModeDisplay">Primary</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-credit-card"></i>
+                            Secondary BIN
+                        </div>
+                        <div class="info-value" id="bin2Display">Not Set</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- BIN Configuration -->
+            <div class="card">
+                <div class="card-header" data-card="config">
+                    <i class="card-icon fas fa-edit"></i>
+                    <h3 class="card-title">BIN Configuration</h3>
+                    <i class="fas fa-chevron-down card-chevron"></i>
+                </div>
+                <div class="card-body" id="configBody">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-sync"></i>
+                        BIN Usage Mode
+                    </label>
+                    <select id="binModeSelect" class="form-input cursor-pointer">
+                        <option value="primary">Use Primary Only</option>
+                        <option value="secondary">Use Secondary Only</option>
+                        <option value="alternate">Auto Alternate Both</option>
+                    </select>
+                </div>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label class="form-label">Primary BIN</label>
+                        <input type="text" id="bin1Input" class="form-input" placeholder="559888 or Base64" maxlength="64">
+                        <small style="color: #6b7280; font-size: 11px; margin-top: 4px; display: block;">
+                            <i class="fas fa-info-circle"></i> Accepts BIN numbers or Base64 encoded values
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Secondary BIN</label>
+                        <input type="text" id="bin2Input" class="form-input" placeholder="552461 or Base64" maxlength="64">
+                        <small style="color: #6b7280; font-size: 11px; margin-top: 4px; display: block;">
+                            <i class="fas fa-info-circle"></i> Accepts BIN numbers or Base64 encoded values
+                        </small>
+                    </div>
+                </div>
+                <button id="saveBinButton" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </button>
+                </div>
+            </div>
+
+            <!-- Full Settings -->
+            <button id="openSettings" class="btn btn-secondary">
+                <i class="fas fa-cog"></i>
+                Open Full Settings
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="popup-footer">
+            <p class="popup-footer-text">
+                Works on Stripe checkout pages only
+            </p>
+            <a href="https://t.me/reysilvaa12" class="popup-footer-link" target="_blank">
+                <i class="fab fa-telegram-plane"></i> Contact Support
+            </a>
+        </div>
+    </div>
+
+    <script src="shared/config.js"></script>
+    <script src="shared/validation.js"></script>
+    <script src="shared/notification.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
